@@ -1,5 +1,5 @@
 #!/bin/bash
-SMOKE_TMP_DIR=$(mktemp -d)
+SMOKE_TMP_DIR=$(mktemp -d tmp.XXXXXXXXXX)
 
 SMOKE_AFTER_RESPONSE=""
 
@@ -166,7 +166,9 @@ _curl_get() {
     SMOKE_URL="$SMOKE_URL_PREFIX$URL"
     _smoke_print_url "$SMOKE_URL"
 
-    curl  --cookie $SMOKE_CURL_COOKIE_JAR --cookie-jar $SMOKE_CURL_COOKIE_JAR --location --dump-header $SMOKE_CURL_HEADERS --silent $SMOKE_URL > $SMOKE_CURL_BODY
+    # --location
+
+    curl  --cookie $SMOKE_CURL_COOKIE_JAR --cookie-jar $SMOKE_CURL_COOKIE_JAR  --dump-header $SMOKE_CURL_HEADERS --silent $SMOKE_URL > $SMOKE_CURL_BODY
 
     grep -oE 'HTTP[^ ]+ [0-9]{3}' $SMOKE_CURL_HEADERS | tail -n1 | grep -oE '[0-9]{3}' > $SMOKE_CURL_CODE
 
