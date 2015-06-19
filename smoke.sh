@@ -101,6 +101,18 @@ smoke_assert_code_ok() {
     fi
 }
 
+smoke_assert_header() {
+     STRING="$1"
+
+     smoke_response_headers | grep --quiet "$STRING"
+
+     if [[ $? -eq 0 ]]; then
+         _smoke_success "Headers contain \"$STRING\""
+     else
+         _smoke_fail "Headers do not contain \"$STRING\""
+     fi
+}
+
 smoke_assert_body() {
     STRING="$1"
 
